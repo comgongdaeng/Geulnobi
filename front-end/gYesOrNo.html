@@ -1,0 +1,34 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="example.css">
+
+    <title>회원가입</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="inside-container">
+                <form>
+                    <h1>Google 계정으로 가입하기</h1>
+                    <h3><span></span>은 가입 이력이 없습니다. 회원가입하시겠습니까?</h3>
+                    <button type="button" id="yes" onClick="location.href = 'gSignUp.html'">yes</button>
+                    <button type="button" id="no" onClick="location.href = 'index.html'">no</button><br>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        const $usermail = document.querySelector('span');
+        if (localStorage.getItem('user-mail')) {
+            var UserMail = localStorage.getItem('user-mail')
+            $usermail.textContent = UserMail;
+        }
+    </script>
+</body>
+
+</html>

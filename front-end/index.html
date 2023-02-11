@@ -1,0 +1,72 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="example.css">
+  <title>로그인</title>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="inside-container">
+        <form>
+          <h1>Sign In</h1>
+          <div class="social-links">
+            <div>
+              <button type="button" class="signIn" onClick="location.href='google.html'"><img src="google.png" alt=""
+                  height="40" width="40"></button>
+            </div>
+          </div>
+          <span>이미 계정이 있으신가요?</span>
+          <input type="email" placeholder="Email" id="email">
+          <input type="password" placeholder="Password" id="pw">
+          <button type="button" class="form_btn" id="login">로그인하기</button> <!--onClick="location.href='success.html'"-->
+          <button type="button" class="form_btn" onClick="location.href='signUp.html'">회원가입하기</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    const $email = document.querySelector("#email");
+    const $password = document.querySelector("#pw");
+    const $loginBtn = document.querySelector("#login");
+    const result = document.querySelector("#result");
+    let code = "";
+
+    $loginBtn.addEventListener('click', LOGIN)
+
+    //사용자가 입력한 email과 password를 전달하는 LOGIN 함수
+    const LOGIN = () => {
+      fetch('URL', {
+        method: 'post',
+        body: JSON.stringify({
+          email: $email.value,
+          password: $password.value
+        })
+      })
+        .then(res => res.json())
+
+      /* 서버로부터 응답 받아서 
+      로그인 성공했으면 정보를 저장하고 화면 전환
+      실패했으면 팝업으로 alert 주는 코드인데
+      이게.. 내가 짤 필요가 없다는 거지?????
+      .then(res => {
+          if (res.Token) {
+          localStorage.setItem('Token', res.Token);
+          this.props.history.push('/');
+          location.href = "success.html"
+          } else {
+              alert('잘못된 email 혹은 pw입니다.')
+              
+          }
+      })*/
+    }
+
+
+  </script>
+</body>
+
+</html>
