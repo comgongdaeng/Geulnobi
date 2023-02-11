@@ -86,12 +86,19 @@
     $getNum.addEventListener('click', function () {
       //인증번호 받기 버튼을 누른 거를 어떤 값을 넘겨줘야 하지...
       //고민하다가 일단 button의 값을 true로 설정해서 인증번호 받기 버튼을 눌렀음을 알려줌!
-      fetch('URL', {
+      //이메일도 다시 보내줘야 하나요??
+      if (confirm) {
+        fetch('URL', {
         method: 'post',
         body: JSON.stringify({
           button: true,
         })
       })
+      } else {
+        alert('중복 확인을 먼저 해주세요.')
+      }
+      
+
     })
 
     //인증번호 확인하는 Code 함수
