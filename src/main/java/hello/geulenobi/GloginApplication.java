@@ -1,4 +1,4 @@
-package hello.glogin;
+package hello.geulenobi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

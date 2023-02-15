@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>권한 없음</title>
+    <title>home </title>
 </head>
 <body>
-
+<!-- accessDenied 페이지, 로그인 확인용 테스트 페이지-->
 <h1> 권한 없음 </h1>
+
+<h2 class="form-signin-heading">로그인이 필요한 페이지입니다.</h2>
+<a th:href="@{/login}"> Login 하러가기 </a><br>
 
 </body>
 </html>

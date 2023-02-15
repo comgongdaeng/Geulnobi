@@ -1,25 +1,94 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <title>로그인 (Please sign in)</title>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-  <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous"/>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--<link rel="stylesheet" type="text/css" href="example.css">-->
+  <title>로그인</title>
 </head>
+
 <body>
-<div class="container">
-  <h2 class="form-signin-heading">로그인이 필요한 페이지입니다.</h2>
-  <p>(Login with OAuth 2.0)</p>
-  <p>외부 로그인 계정을 선택해주세요.</p>
-  <table class="table table-striped" th:each="url : ${urls}">
-    <tr>
-      <td><a href="#" th:href="${url.value}" th:text="${url.key}">Naver</a></td>
-    </tr>
-  </table>
-</div>
+  <div class="wrapper">
+    <div class="container">
+      <div class="inside-container">
+        <form>
+          <h1>Sign In</h1>
+          <div class="social-links">
+            <div >
+              <a th:href="@{/login/google}"> <button type="button" class="signIn"></button> </a>
+
+              <!--
+              * button부분 타임리프써서 연결하려했는데... 왜인지 동작하지 않아서 변경하였습니다 ㅠ 추후에 알아보고 수정하겠습니다.
+              * 아래 google 링크를 클릭하기 전에 img가 포함된 button을 누르면 로그인 연동 후에 google.png로 redirect되는 문제 발생...(why??)
+              * 원본
+                <button type="button" class="signIn" onClick="location.href='google.html'"><img src="google.png" alt=""
+                  height="40" width="40"></button>
+                git에 나오겠지만 혹시나 싶어 원본 button 적어둡니다.
+              -->
+
+            </div>
+            <a th:href="@{/user}"> 로그인한 유저만 사용 가능 </a>
+            <table class="table table-striped" th:each="url : ${urls}">
+              <tr>
+                <td><a href="#" th:href="${url.value}" th:text="${url.key}"></a></td>
+              </tr>
+            </table>
+          </div>
+          <span>이미 계정이 있으신가요?</span>
+          <input type="email" placeholder="Email" id="email">
+          <input type="password" placeholder="Password" id="pw">
+          <button type="button" class="form_btn" id="login" th:onclick="'location.href=\''+ @{/login/google} + '\''">로그인하기</button> <!--onClick="location.href='success.html'"-->
+          <button type="button" class="form_btn" onClick="location.href='signUp.html'">회원가입하기</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- <script> 제가 여길 이해하지 못해서 잠시 주석처리해두겠습니답...
+  에러 메세지가 뜨네요ㅠㅠ
+  Uncaught ReferenceError: Cannot access 'LOGIN' before initialization at index:39:41 이었는데 (주석처리하면서 라인 바뀜)
+  $loginBtn.addEventListener('click', LOGIN) <--여기서 에러가 나는 것 같습니다.
+
+  th:onclick="'location.href=\''+ @{${moveUrl}} + '\''"
+
+
+    const $email = document.querySelector("#email");
+    const $password = document.querySelector("#pw");
+    const $loginBtn = document.querySelector("#login");
+    const result = document.querySelector("#result");
+    let code = "";
+
+    $loginBtn.addEventListener('click', LOGIN)
+
+    //사용자가 입력한 email과 password를 전달하는 LOGIN 함수
+    const LOGIN = () => {
+      fetch('URL', {
+        method: 'post',
+        body: JSON.stringify({
+          email: $email.value,
+          password: $password.value
+        })
+      })
+        .then(res => res.json())
+
+      /* 서버로부터 응답 받아서 
+      로그인 성공했으면 정보를 저장하고 화면 전환
+      실패했으면 팝업으로 alert 주는 코드인데
+      이게.. 내가 짤 필요가 없다는 거지?????
+      .then(res => {
+          if (res.Token) {
+          localStorage.setItem('Token', res.Token);
+          this.props.history.push('/');
+          location.href = "success.html"
+          } else {
+              alert('잘못된 email 혹은 pw입니다.')
+              
+          }
+      })*/
+    }
+
+
+  </script>-->
 </body>
+
 </html>
