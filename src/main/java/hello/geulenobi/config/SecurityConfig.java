@@ -21,6 +21,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/login/google").permitAll()
+                .antMatchers("/signUp").permitAll()
                 .antMatchers("/google.png").denyAll()
                 .antMatchers("/user").hasRole("USER")
                 .anyRequest().authenticated()
@@ -37,5 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
     //로그인 성공시 success 페이지로 이동하도록 수정
+    //로그인 성공했는데 success 페이지 뜨지 않는 오류 발생... TODO
     //antMatchers는 리소스 권한 설정임! 기억!!
 }
