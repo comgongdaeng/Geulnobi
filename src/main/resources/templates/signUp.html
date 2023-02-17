@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link th:href="@{/example.css}" href="../example.css" rel="stylesheet">
+<!--  <link th:href="@{/example.css}" href="../example.css" rel="stylesheet">-->
 
   <!-- 기존 코드 : <link rel="stylesheet" type="text/css" href="example.css">-->
 
@@ -32,14 +32,14 @@
           </div>
           <div>패스워드 확인<input type="password" placeholder="Password" id="pwConfirm"></div>
           <div>이름<input type="text" id="name" th:field="*{name}"></div><br>
-          <button type="button" class="form_btn" id="signUp" type="submit">회원가입</button>
+          <button class="form_btn" id="signUp" type="submit">회원가입</button>
 
 
         </form>
       </div>
     </div>
   </div>
-  <script>
+  <!--<script>
     const $confrim = document.querySelector('#confirm');
     const $email = document.querySelector('#id');
     const $pw = document.querySelector('#pw');
@@ -174,7 +174,7 @@
 
 
   </script>
-
+-->
 </body>
 
 </html>

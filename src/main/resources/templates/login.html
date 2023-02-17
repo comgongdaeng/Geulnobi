@@ -4,8 +4,13 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 타임리프로 css연결하는 코드
   <link th:href="@{/css/example.css}" href="../css/example.css" rel="stylesheet">
-  <!--<link rel="stylesheet" type="text/css" href="example.css">-->
+  아래는 원본 코드
+  <link rel="stylesheet" type="text/css" href="example.css">
+-->
+
   <title>로그인</title>
 </head>
 
@@ -15,13 +20,14 @@
       <div class="inside-container">
 
           <h1>Sign In</h1>
+<!--
           <div class="social-links">
             <div >
                <button class="signIn" onclick="location.href='/oauth2/authorization/google'" th:onclick="|location.href='@{/login/google}'|" type="button">
                  <img src="google.png" alt="" height="40" width="40">
                </button>
 
-              <!--
+              &lt;!&ndash;
               * button부분 타임리프써서 연결하였습니다. git에 나오겠지만 혹시나 싶어 원본 button 적어둡니다.
               * 아래 google 링크를 클릭하기 전에 img가 포함된 button을 누르면 로그인 연동 후에 google.png로 redirect되는 문제 발생...(why??)
               * 임시로 DenyAll해둠
@@ -29,35 +35,37 @@
                 <button type="button" class="signIn" onClick="location.href='google.html'"><img src="google.png" alt=""
                   height="40" width="40"></button>
 
-              * 이 밑에 table에 들어가는 Google은 정상 동작.
-              -->
-
             </div>
             <a th:href="@{/user}"> 로그인한 유저만 사용 가능 </a>
 
-<!--            <table class="table table-striped" th:each="url : ${urls}">
+            <table class="table table-striped" th:each="url : ${urls}">
               <tr>
                 <td><a href="#" th:href="${url.value}" th:text="${url.key}"></a></td>
               </tr>
-            </table> -->
+            </table>
+-->
 
           </div>
           <span>이미 계정이 있으신가요?</span>
-        <form action="login.html" th:action th:object="${loginForm}" method="post">
-          <input type="email" th:field="*{email}" placeholder="Email" id="email" >
-          <input type="password" th:field="*{password}" placeholder="Password" id="pw" >
-          <button class="form_btn" id="login" type="submit">로그인하기</button>
-          <!--onClick="location.href='success.html'"-->
-          <!-- 로그인 버튼 누르면 바로 error창 뜸. 백엔드 코드 수정 필요-->
-          <button type="button" class="form_btn" onClick="location.href='signUp.html'">회원가입하기</button>
-        </form>
-      </div>
+
+      <form th:action="@{/login}" th:object="${loginForm}" method="POST">
+        <div th:if="${#fields.hasGlobalErrors()}">
+          <p class="field-error" th:each="err : ${#fields.globalErrors()}"
+             th:text="${err}">전체 오류 메시지</p>
+        </div>
+        <input type="text" th:field="*{email}" placeholder="Email" id="email">
+        <input type="password" th:field="*{password}" placeholder="Password" id="pw">
+        <button class="form_btn" id="login" type="submit">로그인하기</button>
+        <button type="button" class="form_btn" th:href="@{/signUp}">회원가입하기</button>
+        <button type="button" class="form_btn" th:onclick="|location.href='@{/signUp}'|">회원가입하기</button>
+
+      </form>
+
+
+    </div>
     </div>
   </div>
-   <script>
-
-
-
+ <!--  <script>
     const $email = document.querySelector("#email");
     const $password = document.querySelector("#pw");
     const $loginBtn = document.querySelector("#login");
@@ -90,13 +98,13 @@
           location.href = "success.html"
           } else {
               alert('잘못된 email 혹은 pw입니다.')
-              
           }
       })*/
-    }
+
+     }
 
 
-  </script>
+  </script>-->
 </body>
 
 </html>

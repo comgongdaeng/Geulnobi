@@ -1,46 +1,59 @@
 package hello.geulenobi.domain;
 
-
-import hello.geulenobi.dto.Role;
-import lombok.*;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 
-//Data어노테이션만으로 동작하는지 확인 필요 TODO
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
-@Getter
-@Setter
-public class User implements Serializable {
-    //User table
-    //나중에 dto 분할 필요... 리팩터링 해야할듯
+@Table(name = "users")
+public class User {
+//TODO 이메일 인증번호 받아서 처리할 Table 새로 만들기. fk 사용해서 처리하는 걸로.
+    //TODO 지장은 없지만 나중에 DTO를 inner class로 리팩터링 해보기(시간남으면...?)
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; //임시 pk
-    @NotEmpty
+    private Long id;
+
+    @Column(nullable = false, unique = true)
     private String email;
-    @NotEmpty
-    private String name;
-    @NotEmpty
-    private String password;
-    //보안 업그레이드 필요
 
-    //소셜로그인으로 자동 인서트 될것.(로그인성공시)
-
-    private int mail_auth;
-
-    private String mail_key;
-
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private String password;
+
+    @Column(nullable = false)
+    private String name;
 
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
 }
+
+
+
+

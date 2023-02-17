@@ -1,159 +1,57 @@
 package hello.geulenobi.controller;
 
-import hello.geulenobi.dto.LoginForm;
 import hello.geulenobi.domain.User;
-import hello.geulenobi.service.LoginService;
-import hello.geulenobi.session.SessionConst;
-import hello.geulenobi.session.SessionManager;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import hello.geulenobi.domain.LoginForm;
+import hello.geulenobi.service.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
-@Slf4j
 @Controller
-@RequiredArgsConstructor
 public class LoginController {
-    //세션하면서 다시만져봐야할듯
-    private final LoginService loginService;
-    private final SessionManager sessionManager;
 
- /*   @GetMapping("/login")
-    public String loginForm(@ModelAttribute("loginForm") LoginForm form) {
+    @Autowired
+    private UserServiceImpl userService;
+
+/*    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;*/
+
+
+    @GetMapping("/login")
+    public String loginPage(@ModelAttribute("loginForm") LoginForm loginForm){
         return "login";
-    }*/
-
-       /*//@PostMapping("/login")
-    public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletResponse response) {
-        if (bindingResult.hasErrors()) {
-            return "login/loginForm";
-        }
-
-        User loginUser = loginService.login(form.getEmail(), form.getPassword());
-
-        if (loginUser == null) {
-            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
-            return "login/loginForm";
-        }
-
-        //로그인 성공 처리
-
-        //쿠키에 시간 정보를 주지 않으면 세션 쿠기(브라우저 종료시 모두 종료)
-        Cookie idCookie = new Cookie("memberId", String.valueOf(loginUser.getId()));
-        response.addCookie(idCookie);
-        return "redirect:/";
-
     }
+    //입력폼 페이지 조회시, 템플릿에서 th:object="${loginForm}에서 loginForm에 대한 정보를 전달받지 못해 발생했던 문제였음.
 
-*/
+
     @PostMapping("/login")
-    public String loginV2(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletResponse response) {
+    public String login(@Valid @ModelAttribute("loginForm") LoginForm loginForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            // handle validation errors
             return "login";
         }
 
-        User loginUser = loginService.login(form.getEmail(), form.getPassword());
-
+        User loginUser = userService.login(loginForm.getEmail(), loginForm.getPassword());
         if (loginUser == null) {
+            System.out.println("아이디 또는 비밀번호 불일치");
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+
+            //TODO 타임리프로 처리할 지, js로 처리할 지?
+            //th:error를 사용해서 html에 나타낼 수는 있음.
+
             return "login";
         }
 
-        //로그인 성공 처리
+        // add any other necessary objects to the model
 
-        //세션 관리자를 통해 세션을 생성하고, 회원 데이터 보관
-        sessionManager.createSession(loginUser, response);
 
-        return "redirect:/";
-
+        return "success";
     }
 
-/*
-    //    @PostMapping("/login")
-    public String loginV3(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletRequest request) {
-        if (bindingResult.hasErrors()) {
-            return "login/loginForm";
-        }
 
-        Member loginMember = loginService.login(form.getLoginId(), form.getPassword());
-
-        if (loginMember == null) {
-            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
-            return "login/loginForm";
-        }
-
-        //로그인 성공 처리
-        //세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성
-        HttpSession session = request.getSession();
-        //세션에 로그인 회원 정보 보관
-        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-
-        return "redirect:/";
-
-    }
-
-*/
-
-/*    @PostMapping("/login")
-    public String loginV4(@Validated @ModelAttribute("loginForm") LoginForm form, BindingResult bindingResult,
-                          @RequestParam(defaultValue = "/") String redirectURL,
-                          HttpServletRequest request) {
-
-        if (bindingResult.hasErrors()) {
-            return "login";
-        }
-
-        User loginUser = loginService.login(form.getEmail(), form.getPassword());
-
-        if (loginUser == null) {
-            bindingResult.reject("loginFail", "이메일 아이디 또는 비밀번호가 맞지 않습니다.");
-            return "login";
-        }
-
-        //로그인 성공 처리
-        //세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성
-        HttpSession session = request.getSession();
-        //세션에 로그인 회원 정보 보관
-        session.setAttribute(SessionConst.LOGIN_USER, loginUser);
-
-        return "redirect:" + redirectURL;
-
-    }*/
-
-    //    @PostMapping("/logout")
-    public String logout(HttpServletResponse response) {
-        expireCookie(response, "memberId");
-        return "redirect:/";
-    }
-
-/*    //    @PostMapping("/logout")
-    public String logoutV2(HttpServletRequest request) {
-        sessionManager.expire(request);
-        return "redirect:/";
-    }*/
-
-    @PostMapping("/logout")
-    public String logoutV3(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-        return "redirect:/";
-    }
-
-    private void expireCookie(HttpServletResponse response, String cookieName) {
-        Cookie cookie = new Cookie(cookieName, null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
-    }
 }
