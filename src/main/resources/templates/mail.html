@@ -1,21 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <body>
-<div style="margin:100px;">
-    <h1> 안녕하세요.</h1>
-    <h1> 이메일 인증 번호입니다</h1>
-    <br>
-    <p> 아래 코드를 회원가입 창으로 돌아가 입력해주세요.</p>
-    <br>
-
-    <div align="center" style="border:1px solid black; font-family:verdana;">
-        <h3 style="color:blue"> 회원가입 인증 코드 입니다. </h3>
-        <div style="font-size:130%" th:text="${code}"> </div>
-        <span style="border: 1px solid; padding: 8px;font-size: 20px;" th:text="${code}"></span>
-    </div>
-    <br/>
+<div align="center" style="font-size: 15px">
+    <img src="https://media.vlpt.us/images/ayoung0073/post/090c55bf-79cb-4724-b081-a843a0c3d0c7/springboot.jpeg" width="400" alt=""/>
+    <br><br>
+    <span style="border: 1px solid; padding: 8px;font-size: 20px;" th:text="${code}"></span>
 </div>
-
 </body>
 </html>

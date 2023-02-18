@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users")
 public class User {
-//TODO 이메일 인증번호 받아서 처리할 Table 새로 만들기. fk 사용해서 처리하는 걸로.
+    //TODO 이메일 인증번호 받아서 처리할 Table 새로 만들기. fk 사용해서 처리하는 걸로?
     //TODO 지장은 없지만 나중에 DTO를 inner class로 리팩터링 해보기(시간남으면...?)
 
     @Id
@@ -20,6 +20,7 @@ public class User {
 
     @Column(nullable = false)
     private String name;
+
 
 
     public Long getId() {

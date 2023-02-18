@@ -42,12 +42,11 @@ public class LoginController {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
 
             //TODO 타임리프로 처리할 지, js로 처리할 지?
-            //th:error를 사용해서 html에 나타낼 수는 있음.
+            //th:error를 사용해서 html에 나타낼 수는 있음.(현재 상태)
 
             return "login";
         }
 
-        // add any other necessary objects to the model
 
 
         return "success";
