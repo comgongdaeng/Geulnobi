@@ -20,8 +20,13 @@ public class User {
 
     @Column(nullable = false)
     private String name;
+/*
+    @Column(nullable = false)
+    private Role role;
+*/
 
 
+    //TODO 밑에 GETTER SETTER 따로 분리하는 것 같던데 찾아보고 나중에 리팩터링 진행.
 
     public Long getId() {
         return id;
@@ -53,6 +58,14 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+
+/*    public void setRole(Role roleUser) {
+        this.role=role;
+    }
+
+    public Role getRole() {
+        return role;
+    }*/
 }
 
 

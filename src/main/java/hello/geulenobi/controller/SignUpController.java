@@ -6,15 +6,11 @@ import hello.geulenobi.service.EmailAuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -22,7 +18,7 @@ import javax.validation.Valid;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-public class UserController {
+public class SignUpController {
 
     @Autowired
     private HttpSession httpSession;
@@ -51,20 +47,6 @@ public class UserController {
         return "auth";
     }
 
-/*    @PostMapping("/auth")
-    public ResponseEntity<String> authenticateUser(@RequestParam String code, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return new ResponseEntity<>("User not found", HttpStatus.BAD_REQUEST);
-        }
-        if (emailAuthService.validateCode(user.getEmail(), code)) {
-            userRepository.save(user);
-            session.removeAttribute("user");
-            return new ResponseEntity<>("Authentication successful", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED);
-        }
-    } */
     @PostMapping("/auth")
     public String authenticateUser(@RequestParam String code, HttpSession session) {
         User user = (User) session.getAttribute("user");
