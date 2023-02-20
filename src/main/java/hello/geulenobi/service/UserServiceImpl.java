@@ -44,6 +44,8 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findOne(String email){
         return userRepository.findByEmail(email);
     }
+    //내가 이걸 왜 만들었더라......
+
     @Override
     public User login(String email, String password) {
         return userRepository.findByEmail(email).filter(m-> m.getPassword().equals(password)).orElse(null);

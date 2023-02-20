@@ -1,4 +1,4 @@
-/*
+
 package hello.geulenobi.config;
 
 import hello.geulenobi.service.CustomOAuth2UserService;
@@ -20,6 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/login/google").permitAll()
                 .antMatchers("/signUp").permitAll()
                 .antMatchers("/auth").permitAll()
                 .antMatchers("/user").hasRole("USER")
@@ -27,10 +28,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().accessDeniedPage("/accessDenied")
                 .and()
-                .logout().logoutUrl("/logout")
-                .logoutSuccessUrl("/login").permitAll()
+                .logout().logoutUrl("/logout")// /logout 이용하며 logout 됨
+                //TODO 로그아웃 시 이동하는 거 controller로 만들어야함.
+                .logoutSuccessUrl("/login").permitAll()//로그아웃하면 이쪽으로 이동
                 .and()
                 .oauth2Login().loginPage("/login")
+                //path variable 못씀!
                 .defaultSuccessUrl("/success")
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
@@ -39,4 +42,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //로그인 성공시 success 페이지로 이동하도록 수정
     //antMatchers는 리소스 권한 설정임! 기억!!
 }
-*/
+

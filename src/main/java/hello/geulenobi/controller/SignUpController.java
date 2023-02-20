@@ -21,7 +21,7 @@ import javax.validation.Valid;
 public class SignUpController {
 
     @Autowired
-    private HttpSession httpSession;
+    private HttpSession httpSession; //이거 왜가져옴?
     private final UserRepository userRepository;
     private final EmailAuthService emailAuthService;
 

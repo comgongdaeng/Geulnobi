@@ -18,12 +18,12 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String name;
-/*
+
     @Column(nullable = false)
     private Role role;
-*/
+
 
 
     //TODO 밑에 GETTER SETTER 따로 분리하는 것 같던데 찾아보고 나중에 리팩터링 진행.
@@ -59,13 +59,13 @@ public class User {
         this.name = name;
     }
 
-/*    public void setRole(Role roleUser) {
+    public void setRole(Role roleUser) {
         this.role=role;
     }
 
     public Role getRole() {
         return role;
-    }*/
+    }
 }
 
 

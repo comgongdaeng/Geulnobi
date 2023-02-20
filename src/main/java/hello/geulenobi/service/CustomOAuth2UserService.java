@@ -1,4 +1,4 @@
-/*
+
 package hello.geulenobi.service;
 
 import hello.geulenobi.domain.Role;
@@ -61,7 +61,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         User user;
         Optional<User> optionalUser = userRepository.findByEmail(email);
-
+        //TODO 그냥 가져오는게 아니라 여기서 자체적으로 가입한건지, 연동한건지 확인할 필요가 있음....how?
         if(optionalUser.isPresent()){//유저가 이미 존재하는 경우
             user = optionalUser.get();//정보가져옴
         }else{
@@ -77,4 +77,4 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 , oAuth2User.getAttributes()
                 , userNameAttributeName);
     }
-}*/
+}

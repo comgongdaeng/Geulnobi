@@ -20,30 +20,29 @@
       <div class="inside-container">
 
           <h1>Sign In</h1>
-<!--
+
           <div class="social-links">
             <div >
-               <button class="signIn" onclick="location.href='/oauth2/authorization/google'" th:onclick="|location.href='@{/login/google}'|" type="button">
-                 <img src="google.png" alt="" height="40" width="40">
-               </button>
+-->
+                <form th:action="@{/login/google}" method="post">
+                    <button type="submit">Login with Google</button>
+                </form>
 
-              &lt;!&ndash;
-              * button부분 타임리프써서 연결하였습니다. git에 나오겠지만 혹시나 싶어 원본 button 적어둡니다.
-              * 아래 google 링크를 클릭하기 전에 img가 포함된 button을 누르면 로그인 연동 후에 google.png로 redirect되는 문제 발생...(why??)
-              * 임시로 DenyAll해둠
-              * 원본
-                <button type="button" class="signIn" onClick="location.href='google.html'"><img src="google.png" alt=""
-                  height="40" width="40"></button>
+
+
+                <!-- &lt;!&ndash;
+                 * button부분 타임리프써서 연결하였습니다. git에 나오겠지만 혹시나 싶어 원본 button 적어둡니다.
+                 * 아래 google 링크를 클릭하기 전에 img가 포함된 button을 누르면 로그인 연동 후에 google.png로 redirect되는 문제 발생...(why??)
+                 * 임시로 DenyAll해둠
+                 * 원본
+                   <button type="button" class="signIn" onClick="location.href='google.html'"><img src="google.png" alt=""
+                     height="40" width="40"></button>
+
+                     <img src="google.png" alt="" height="40" width="40">-->
 
             </div>
             <a th:href="@{/user}"> 로그인한 유저만 사용 가능 </a>
 
-            <table class="table table-striped" th:each="url : ${urls}">
-              <tr>
-                <td><a href="#" th:href="${url.value}" th:text="${url.key}"></a></td>
-              </tr>
-            </table>
--->
 
           </div>
           <span>이미 계정이 있으신가요?</span>

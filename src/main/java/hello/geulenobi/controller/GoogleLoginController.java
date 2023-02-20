@@ -1,4 +1,4 @@
-/*
+
 package hello.geulenobi.controller;
 
 import hello.geulenobi.repository.UserRepository;
@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -18,9 +19,8 @@ public class GoogleLoginController {
     private static final String authorizationRequestBaseUri = "oauth2/authorization";
     Map<String, String> oauth2AuthenticationUrls = new HashMap<>();
 
-    // private final UserRepository;
 
-    @GetMapping("/login/{oauth2}")
+    @PostMapping("/login/{oauth2}")
     public String loginGoogle(@PathVariable String oauth2, HttpServletResponse httpServletResponse){
         return "redirect:/oauth2/authorization/" + oauth2;
     }
@@ -30,4 +30,4 @@ public class GoogleLoginController {
     // defaultSuccessURL() 이용해서..
 
 }
-*/
+
