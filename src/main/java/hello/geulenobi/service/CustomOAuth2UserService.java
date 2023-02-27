@@ -1,8 +1,10 @@
 
 package hello.geulenobi.service;
 
+import hello.geulenobi.domain.GoogleUser;
 import hello.geulenobi.domain.Role;
 import hello.geulenobi.domain.User;
+import hello.geulenobi.repository.GoogleUserRepository;
 import hello.geulenobi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,7 +25,7 @@ import java.util.Optional;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     @Autowired
-    UserRepository userRepository;
+    GoogleUserRepository googleUserRepository;
 
     @Autowired
     HttpSession httpSession;
@@ -59,21 +61,22 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         //네이버랑 구글이랑 이메일 받아오는 방식이 달라서 구분해준것. 이외의 것들은 일단 예외처리
 
 
-        User user;
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-        //TODO 그냥 가져오는게 아니라 여기서 자체적으로 가입한건지, 연동한건지 확인할 필요가 있음....how?
-        if(optionalUser.isPresent()){//유저가 이미 존재하는 경우
-            user = optionalUser.get();//정보가져옴
+        GoogleUser googleUser;
+        Optional<GoogleUser> optionalGoogleUser = googleUserRepository.findByEmail(email);
+        //TODO email/password 조합으로 이미 가입한 경우(USERS테이블의 email 중복) 어떻게 처리할 건지?
+        if(optionalGoogleUser.isPresent()){//유저가 이미 존재하는 경우
+            googleUser = optionalGoogleUser.get();//정보가져옴
         }else{
-            user = new User();
-            user.setEmail(email); //아니면 받아온 정보로 만들어주자
-            user.setRole(Role.ROLE_USER);
-            userRepository.save(user);
+            googleUser = new GoogleUser();
+            googleUser.setEmail(email); //아니면 받아온 정보로 만들어주자
+            googleUser.setName("TEMP");
+            googleUser.setRole(Role.USER);
+            googleUserRepository.save(googleUser);
         }
-        httpSession.setAttribute("user", user);
+        httpSession.setAttribute("user", googleUser);
 
         return new DefaultOAuth2User(
-                Collections.singleton(new SimpleGrantedAuthority(user.getRole().toString()))//권한 넣어줌
+                Collections.singleton(new SimpleGrantedAuthority(googleUser.getRole().toString()))//권한 넣어줌
                 , oAuth2User.getAttributes()
                 , userNameAttributeName);
     }

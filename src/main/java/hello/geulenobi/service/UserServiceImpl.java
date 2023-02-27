@@ -1,6 +1,8 @@
 package hello.geulenobi.service;
 
+import hello.geulenobi.domain.GoogleUser;
 import hello.geulenobi.domain.User;
+import hello.geulenobi.repository.GoogleUserRepository;
 import hello.geulenobi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,16 +13,19 @@ import java.util.Optional;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-
+//TODO repo에 save로 구현했던것들 service의 register로 처리하는 방법 고민해보기.
 
     @Autowired
     private final UserRepository userRepository;
+    @Autowired
+    private final GoogleUserRepository googleUserRepository;
 
 /*    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;*/
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, GoogleUserRepository googleUserRepository) {
         this.userRepository = userRepository;
+        this.googleUserRepository = googleUserRepository;
     } //동적 변경 차단
 
     @Override
@@ -48,6 +53,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(String email, String password) {
+        Optional<GoogleUser> existUser = googleUserRepository.findByEmail(email);
+        if (existUser.isPresent()){
+
+        }
         return userRepository.findByEmail(email).filter(m-> m.getPassword().equals(password)).orElse(null);
     }
 }

@@ -6,17 +6,14 @@ import hello.geulenobi.service.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.core.ResolvableType;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -24,6 +21,10 @@ public class LoginController {
 
     @Autowired
     private UserServiceImpl userService;
+
+    @Autowired
+    private HttpSession httpSession;
+
 
 /*    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;*/
@@ -34,17 +35,28 @@ public class LoginController {
 
 */
 
-    @RequestMapping(value="/login", method={RequestMethod.GET, RequestMethod.POST})
-    public String login(@Valid @ModelAttribute("loginForm") LoginForm loginForm, BindingResult bindingResult, Model model) {
-        /*TODO 구글 로그인 버튼 눌렀을 때 -> 구글 로그인한 후에 다시 login으로 돌아옴 -> 인증 정보를 가져와서 가입을 안시킴.
-            DB 내용이랑 비교해서 없으면 가입. 있으면 아래와 같이 가져오도록
-            Caused by: org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException: NULL not allowed for column "NAME"; SQL statement:
-            니까 name이 비어있어서......... 그런거니까 구글 로그인 할때 이름도 가져오도록 설정해야함. +password도 nullable=false라서 어떻게 할지 고민해봐야됨!!!*/
+    //로그인 get과 post 분리하였음.
+    @GetMapping("/login")
+    public String loginPage(@ModelAttribute("loginForm") LoginForm loginForm, Model model,HttpSession session){
 
+        if(session.getAttribute("user")==null){
+            return "login";
+        }
+
+        return "success";
+
+    }
+    @PostMapping("/login")
+    public String loginPage(@Valid @ModelAttribute("loginForm") LoginForm loginForm, BindingResult bindingResult, Model model, HttpSession session){
+        //1.세션에 정보가 있으면 그냥 바로 success로 보내고
+        //2.세션에 정보가 없으면 login창 보여주고 하는게 가능한가? 어떻게 해야하지?
+        //세션의 user가 null이 아닌지 if문으로 검사 ->null아니면 바로 success로 리다이렉트/null이면 if문 건너뛰고 login로직.
+        //getMapping에서 해야되겠다.
+        //login
 
 
         User loginUser = userService.login(loginForm.getEmail(), loginForm.getPassword());
-
+        //
         if (loginUser == null) {
             System.out.println("아이디 또는 비밀번호 불일치");
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
@@ -59,13 +71,20 @@ public class LoginController {
             //
             return "login";
         }
+
+        session.setAttribute("user", loginUser);
+
         return "success";
     }
 
-    @GetMapping
+    @GetMapping("/logout")
     public String logout(){
-        return "signUp";
+        return "login";
     }
 
+    @GetMapping("/success")
+    public String loginSuccess(){
+        return "success";
+    }
 
 }

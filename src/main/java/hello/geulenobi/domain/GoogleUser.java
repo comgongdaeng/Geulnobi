@@ -3,10 +3,9 @@ package hello.geulenobi.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users")
-public class User {
-
-    //TODO 지장은 없지만 나중에 DTO를 inner class로 리팩터링 해보기(시간남으면...?)
+@Table(name = "googleUsers")
+public class GoogleUser {
+    //TODO getter setter로 리팩해보기
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,15 +14,11 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
-    private String password;
-
     @Column(nullable = true)
     private String name;
-
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
-
 
     //TODO 밑에 GETTER SETTER 따로 분리하는 것 같던데 찾아보고 나중에 리팩터링 진행.
 
@@ -43,14 +38,6 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getName() {
         return name;
     }
@@ -66,7 +53,3 @@ public class User {
         return role;
     }
 }
-
-
-
-

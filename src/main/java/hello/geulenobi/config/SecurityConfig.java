@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
     @Autowired
     CustomOAuth2UserService customOAuth2UserService;
 
@@ -24,6 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/signUp").permitAll()
                 .antMatchers("/auth").permitAll()
                 .antMatchers("/user").hasRole("USER")
+                .antMatchers("/success").authenticated()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().accessDeniedPage("/accessDenied")
@@ -41,5 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
     //로그인 성공시 success 페이지로 이동하도록 수정
     //antMatchers는 리소스 권한 설정임! 기억!!
+    //TODO antMathcers 줄여보기
 }
 

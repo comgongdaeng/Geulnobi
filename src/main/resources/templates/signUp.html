@@ -17,6 +17,13 @@
       <div class="sign-up-container">
         <form action="" th:action th:object="${user}" method="post">
           <h1>회원가입</h1>
+
+            <div th:if="${#fields.hasGlobalErrors()}">
+              <p class="field-error" th:each="err : ${#fields.globalErrors()}"
+                 th:text="${err}">이메일 중복 에러 메세지</p>
+            </div>
+
+
           <div style="float:left">e-mail
             <input type="email" class="email" placeholder="Email" name="" id="id" th:field="*{email}"></div>
           <div>
