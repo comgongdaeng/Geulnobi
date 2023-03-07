@@ -5,6 +5,7 @@ import hello.geulenobi.domain.User;
 import hello.geulenobi.repository.GoogleUserRepository;
 import hello.geulenobi.repository.UserRepository;
 import hello.geulenobi.service.EmailAuthService;
+import hello.geulenobi.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class SignUpController {
     @Autowired
     private HttpSession httpSession; //이거 왜가져옴? 서블릿...써야하나? 세션 공부좀 ㅠ
     private final UserRepository userRepository;
+
+    private final UserServiceImpl userService;
+    //클래스를 impl로 써도 되나? 어떤게 나은지 찾아보기
     private final GoogleUserRepository googleUserRepository;
     private final EmailAuthService emailAuthService;
 
@@ -34,7 +38,8 @@ public class SignUpController {
     }
 
     @PostMapping("/signUp")
-    public String save(@Valid @ModelAttribute User user, BindingResult bindingResult, HttpSession session) throws Exception {
+    public String
+    save(@Valid @ModelAttribute User user, BindingResult bindingResult, HttpSession session) throws Exception {
         if (bindingResult.hasErrors()) {
             return "signUp";
         }
@@ -67,7 +72,11 @@ public class SignUpController {
         }
         if (emailAuthService.validateCode(user.getEmail(), code)) {
             user.setRole(Role.USER);
-            userRepository.save(user);
+            userService.register(user);
+            //Todo 유저 서비스 가져와서 register로 등록하기. -->완료
+            //userRepository.save(user);
+            //여기 수정해야할것같은데..... 바로 넣는게 아니라 비밀번호 암호화하고 넣기.
+            //암호화 저장 완료. 문제... 로그인 할때 오류뜸...!
 
             return "success";
         } else {

@@ -3,13 +3,21 @@ package hello.geulenobi.config;
 
 import hello.geulenobi.service.CustomOAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+@Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }//TODO 지워도 되는지 확인하기
 
     @Autowired
     CustomOAuth2UserService customOAuth2UserService;
@@ -24,7 +32,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login/google").permitAll()
                 .antMatchers("/signUp").permitAll()
                 .antMatchers("/auth").permitAll()
-                .antMatchers("/user").hasRole("USER")
+                .antMatchers("/user_only").hasRole("USER")
+                //TODO 사이트 회원가입시 회원의 역할이 0으로 저장되는 문제 발생. 수정요망
+                //
                 .antMatchers("/success").authenticated()
                 .anyRequest().authenticated()
                 .and()
