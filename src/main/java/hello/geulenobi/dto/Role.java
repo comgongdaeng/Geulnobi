@@ -1,5 +1,1 @@
-package hello.geulenobi.dto;
-
-public enum Role {
-    ROLE_USER;
-}
+//role을 어디 폴더에 넣어야할지... 고민중.
