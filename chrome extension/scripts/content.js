@@ -1,40 +1,197 @@
-function selectText() {
-  let selectionText = "";
-  if (document.getSelection) {
-    selectionText = document.getSelection();
-  } else if (document.selection) {
-    selectionText = document.selection.createRange().text;
+console.log("content is loaded");
+const formal = document.createElement("span"); formal.id = "formal";
+const $title = document.createElement("p"); $title.className = "title";//$title.id = "title";
+const $dragged = document.createElement("p"); $dragged.id = "dragged";
+const $another = document.createElement("button"); $another.id = "another";
+const $apply = document.createElement("button"); $apply.id = "apply";
+
+
+const syn = document.createElement("span"); syn.id = "syn";// tooltip.className = "syn";
+  const $title_w = document.createElement("p"); $title_w.className = "title";//$title.id = "title"; 
+  const $target = document.createElement("p"); $target.id = "target";
+
+
+  const $meaning = document.createElement("p"); $meaning.id = "meaning";
+  const $meaningContainer = document.createElement("div"); $meaningContainer.className = "container";
+  $meaningContainer.style.overflow = "auto";
+  $meaningContainer.style.maxHeight = "60px"; 
+  $meaningContainer.appendChild($meaning);
+
+  const $more = document.createElement("button"); $more.id = "more";
+
+  const $dic_more = document.createElement("p"); $dic_more.id = "dic_more";
+
+  const $rec_title = document.createElement("p"); $rec_title.className = "title";//$rec_title.id = "rec_title";
+  const $rec1 = document.createElement("p"); $rec1.id = "rec1"; $rec1.className = "words";
+  const $rec2 = document.createElement("p"); $rec2.id = "rec2"; $rec2.className = "words";
+  const $rec3 = document.createElement("p"); $rec3.id = "rec3"; $rec3.className = "words";
+  const $rec_another = document.createElement("p"); $rec_another.id = "rec_another";
+  $rec_title.innerHTML = "<strong> 유의어/동의어 추천 </strong>"
+  const $br = document.createElement("br");
+  $title_w.innerHTML = "<strong> 단어 뜻 </strong>";
+  $meaning.innerHTML = `<div style ="text-align:center";>
+  <img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/ZKZg.gif" style = "width:16px; height:16px;">
+  </div>`;
+  $more.innerHTML = `<div id = "morebtn">  <span> 유의어/동의어 추천 </span>  <img class=morebtn style="width:16px; height:16px;">
+</div>`
+  $rec_another.innerHTML = `<div><img class=again  style="width:16px; height:16px;">  <span>다른 추천 단어 보기</span>
+</div>`
+$rec_another.style.cursor = "pointer"
+$dic_more.innerText = "검색 결과 더 보기☞"
+
+const grammar = document.createElement("span"); grammar.id = "grammar";
+const $correct = document.createElement("p"); $correct.id = "correct";
+const $dismiss = document.createElement("p"); $dismiss.id = "dismiss";
+$correct.innerHTML ="감사합니다"; $dismiss.innerHTML =`<img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/trash.png" style = "width:16px; height:16px;"> 무시하기`;
+const $gr_title = document.createElement("p"); $gr_title.className = "title";
+$gr_title.innerHTML = "<strong> 맞춤법 제안 </strong>"
+grammar.append($gr_title, $correct, $dismiss);//수정
+
+const domain= "https://geuldobi.kro.kr"
+
+let dic_result;
+
+async function isSentence(selec_text){
+    let res;
+    let url = domain+"/isSentence?user_input=" + selec_text;
+        console.log(url)
+        await fetch(url).then((response) => response.json())
+          .then((data) => { res = data; console.log(data); dic_result = res;});
+        if (res =="no data") {res = res.toString(); }
+        console.log("this is res:", res)
+    return res;
+}
+
+//드래그->문장일 경우
+async function KoSST(selec_text){
+    init_formal();
+    let res;
+    let url = domain +"/model/KoSST?user_sentence=" + selec_text
+    console.log("격식 비격식 호출됨");
+    await fetch(url).then((response) => response.json())
+        .then((data) => {res = data; console.log(data)});
+        machine = res["user_sentence"];
+        $dragged.innerText = machine//selec_text;
+        
+}
+
+
+$correct.addEventListener("mouseover", ()=>{
+    $correct.style.backgroundColor = "#11714d";
+    $correct.style.color = "white";
+})
+
+$correct.addEventListener("mouseleave", ()=>{
+    $correct.style.backgroundColor = "white";
+    $correct.style.color = "black";
+})
+
+$dismiss.addEventListener("mouseover", ()=>{
+    $dismiss.style.backgroundColor = "#11714d";
+    $dismiss.style.color = "white";
+})
+
+$dismiss.addEventListener("mouseleave", ()=>{
+    $dismiss.style.backgroundColor = "white";
+    $dismiss.style.color = "black";
+})
+
+function addUnderline() {
+  const divs = document.body.getElementsByTagName("div");
+  for (let i = 0; i < divs.length; i++) {
+    const div = divs[i];
+    if (div.innerHTML.includes("감사하빈다")) {
+      div.innerHTML = div.innerHTML.replace(/감사하빈다/g, '<span id="wrong">감사하빈다</span>');
+
+      const wrongSpan = div.querySelector("#wrong");
+      wrongSpan.style.textDecoration = "underline red";
+      wrongSpan.style.cursor = "pointer";
+      wrongSpan.addEventListener("click", function() {
+        grammar.style.display = "block";
+        wrongSpan.append(grammar);
+      });
+    }
   }
-  return selectionText;
 }
-//일단 눈에 띄게 초록색 큰 글씨로 div 태그 생성 
-const $dragged = document.createElement("div");
-$dragged.style.fontSize = "30px";
-$dragged.style.color = "green";
+
+document.addEventListener("input", ()=>{addUnderline()})
 
 
-
-document.onmouseup = function (e) {
-  //추후 구현할 모달( or 논-모달??) 위치를 위해 좌표 가져오기
-  const mouseX = e.clientX;
-  const mouseY = e.clientY; // 나중에 기회 되면 변수로 바꾸기
-  /*$dragged.style.left = mouseX +'px';
-  $dragged.style.right = mouseY +'px';
-  
-  console.log(mouseX, mouseY, selectText().toString())*/
-  const drag = selectText();
-  $dragged.innerHTML = drag;
-  (async () => {
-    const response = await chrome.runtime.sendMessage({greeting: "hello", text: drag});
-    console.log(response.farewell);
-    /**백그라운드 스크립트로 갔다 오는 동작 확인
-     * (백엔드에서 단어, 문장 구분을 하지 않는 경우)
-     * future work:
-     *  content script에서 판별한 뒤
-     *  속성을 달리 해서 백그라운드로 전달해주면 될 듯!
-     * 
-     */
-  }) ();
-  const $heading = document.querySelector("h1");
-  ($heading).insertAdjacentElement("afterend", $dragged);
+//드래그-> 단어일 경우
+function getMeaning(res) {    
+  word_init()
+    $target.innerText = selec_text;
+    console.log("getMeaning selec",selec_text)
+    console.log(res)
+    $meaning.innerHTML = "1. "+ res["items"][0]["definition"];
+    if(res["total"]>"1")
+        $meaning.innerHTML += "<br>2. " + res["items"][1]["definition"];    
+    if(res["total"]<"3")
+        $dic_more.style.display = "none";    
+    
+        //word_init()
+    //syn.append($title_w, $target, $meaning, $dic_more, $more, $br, $rec_title, $rec1, $rec2, $rec3, $rec_another);
+    
+    //console.log("여기까지 함")
 }
+
+
+  //마우스다운 이벤트-> 드래그되었는지 아닌지 확인
+document.addEventListener("mouseup", function (event) {
+    let clickedElement = event.target;
+    while (clickedElement) {
+      if (clickedElement.id === 'syn'||clickedElement.id === 'formal'||clickedElement.id === 'grammar') {
+        event.stopImmediatePropagation();
+        return;
+      }
+      clickedElement = clickedElement.parentElement;
+    }
+
+      const selection = window.getSelection()
+      if (selection) {
+        const first = selection.getRangeAt(0);
+        parentElement = first.commonAncestorContainer.parentElement;
+        /*console.log(parentElement.tagName);*/
+        selec_text = selection.toString();
+      }
+      
+      if (selec_text) {
+        //isSentence
+
+        isSentence(selec_text).then(result => {
+            console.log("under res:", result);
+            if (result == "no data") {
+              KoSST(selec_text);
+              console.log("됐당");
+              if (selec_text.trim().length !== 0) {
+                isDragging = true;
+                formal.style.display = 'block';
+                parentElement.append(formal);
+              }
+            } else {
+              let tr = getMeaning(result);
+              syn.style.display = "block";
+              parentElement.append(syn);
+              getSyn(selection);
+            }
+          });
+
+    } else {
+        syn.style.display = 'none';
+        formal.style.display = "none";//드래그된 내용이 없으면 툴팁 안 보이게
+        isDragging = false;}
+  });
+
+
+  // 드래그 시작 위치로 툴팁 위치 지정
+document.addEventListener('mousedown', (event) => {
+  formal.style.left = event.pageX + 'px';
+  formal.style.top = event.pageY + 'px';
+  syn.style.left = event.pageX + 'px';
+  syn.style.top = event.pageY + 'px';
+
+    console.log(event.pageX, event.pageY, event.clientX, event.clientY);
+
+  });
+/**    tooltip.style.top = target.getBoundingClientRect().bottom + "px";
+    tooltip.style.left = target.getBoundingClientRect().left + "px"; */

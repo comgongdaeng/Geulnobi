@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
+span.error {
+	text-decoration: underline;
+}
+
+#formal {
+	display: none;
+	position: absolute;
+	height: 120px;
+	width: 400px;
+	background-color: white;
+	border: solid 1px #11714d;
+	border-radius: 2em;
+	padding: 13px 0px;/*위아래 여백을 13으로, 왼쪽 오른쪽 여백을 0으로(마우스 hover 시 색 꽉 채우기 위함..)*/
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+#syn {
+	display: none;
+	position: absolute;
+	height: 200px;
+	width: 300px;
+	background-color: white;
+	border: solid 1px #11714d;
+	border-radius: 2em;
+	padding: 13px 0px;/*위아래 여백을 13으로, 왼쪽 오른쪽 여백을 0으로(마우스 hover 시 색 꽉 채우기 위함..)*/
+	font-family: 'Nanum Gothic', sans-serif;
+	font-size: 12px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	
+}
+
+#grammar {
+	display: none;
+	position: absolute;
+	height: 120px;
+	width: 120px;
+	background-color: white;
+	border: solid 1px #11714d;
+	border-radius: 2em;
+	padding: 13px 0px;/*위아래 여백을 13으로, 왼쪽 오른쪽 여백을 0으로(마우스 hover 시 색 꽉 채우기 위함..)*/
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+#correct {
+	font-size: 12px;
+    height: 50;
+    width: 120;
+    padding: 13px;
+    margin: 0;
+}
+#dismiss {
+	font-size: 12px;
+    height: 50;
+    width: 120;
+    padding: 13px;
+    margin: 0;
+}
+
+button {
+	display: flex;
+}
+
+.non-draggable {
+	-ms-user-select: none;
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+.title {
+	color: #62b124;
+	font-size: 15px;
+	justify-content: flex-start;
+	text-align: left;
+	padding: 0px 13px;/*툴팁 테두리의 양옆 패딩 줄인 관계로 나머지에 추가..*/
+    margin: 0;
+}
+
+#dragged, #target {
+	color: #11714d;
+	font-size: 12px;
+	text-align: left;
+	padding: 0px 13px;/*툴팁 테두리의 양옆 패딩 줄인 관계로 나머지에 추가..*/
+}
+
+#another, #more {
+	background-color: white;
+	color: black;
+	height: 20;
+	width: 120;
+	border-radius: 3em;
+	font-size: 15px;
+	float: left;
+	/* 가로 - 왼쪽으로 */
+	justify-content: flex-end;
+	/* 세로 - 하단으로 */
+	margin: 0px 13px;/*툴팁 테두리의 양옆 패딩 줄인 관계로 나머지에 추가..*/
+}
+
+#another:hover, #more:hover {
+	background-color: #62b124;
+	color: white;
+}
+
+#apply {
+	color: white;
+	background-color: #11714d;
+	font-size: 15px;
+	float: right; /* 가로 - 왼쪽으로 */
+	justify-content: flex-end; /* 세로 - 하단으로 */
+	margin-right: 13px;
+}
+
+.words {
+    height: 50;
+    width: 250;
+    padding: 0px;
+    margin: 0;
+}
+.words:hover {
+    background-color: #11714d;
+	color:white;
+}
+
+.morebtn {
+  content: url(https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/more.png
+);
+}
+
+.triangle {
+  content: url(https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/triangle.png
+);
+}
+.again {
+  content: url(https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/loading_32.png);
+}
+
+#sidebar {
+	position: fixed;
+	right: 0px;
+	top: 0px;
+	z-index: 9999;
+	width: 290px;
+	height: 100%;
+	background-color: white;
+	overflow :auto;
+	/*color:black;
+	font-size: 30px;*/
+}
+
+#dic_more {
+	text-decoration: underline;
+	color: #62b124;
+	cursor: pointer;
+	margin: 13px;/*툴팁 테두리의 양옆 패딩 줄인 관계로 나머지에 추가..*/
+}
+
+.container{
+	padding: 0px 13px;/*툴팁 테두리의 양옆 패딩 줄인 관계로 나머지에 추가..*/
+	margin: 0;
+}
