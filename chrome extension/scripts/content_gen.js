@@ -34,21 +34,18 @@ $another.addEventListener('mousedown', (event) => {
 //init 함수에 넣어서 격식/ 비격식 되돌리기 
 function init_formal() {
   $title.innerHTML = "<strong> 추천 문장 </strong>";
-  $dragged.innerHTML = `<div style ="text-align:center";>
-  <img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/ZKZg.gif" style = "width:16px; height:16px;">
-  </div>`;
-  $another.innerHTML = `<div>
-<img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/loading_32.png" style="width:16px; height:16px;">
-  <span>다른 문장 추천 받기</span>
-</div>`
+  $dragged.innerHTML = `<div style ="text-align:center";> 
+  <img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/ZKZg.gif" style = "width:16px; height:16px;">  </div>`;
+  $another.innerHTML = `<div><img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/loading_32.png" style="width:16px; height:16px;"><span>다른 문장 추천 받기</span></div>`
   $apply.innerText = "적용하기";
 }
 init_formal()
 
-formal.append($title, $dragged, $another, $apply);
+formal.append($title, $draggedContainer, $another, $apply);
 //$apply.style.alignItems = "center";
-$title.class = "non-draggable";
-$dragged.class = "non-draggable";
+$title.className += " non-draggable";
+$dragged.className = "non-draggable";
+$apply.className = "non-draggable";
 let isDragging = false;
 let machine;// = "머신 돌려온 값을 이 변수에다 넣을 거야";
 let parentElement;
@@ -77,10 +74,10 @@ $apply.addEventListener("mousedown", (event) => {
     console.log("applied==false")
     applied = true;
     const $text = document.getElementsByTagName('div');
-
+    formal.style.display = "none";
     for (let i = 0; i < $text.length; i++) {
       if ($text[i].innerHTML.includes(selec_text)) {
-        $text[i].innerHTML = $text[i].innerHTML.replace($dragged.innerText, machine);
+        $text[i].innerHTML = $text[i].innerHTML.replace(selec_text, machine);
         break;
       }
     }

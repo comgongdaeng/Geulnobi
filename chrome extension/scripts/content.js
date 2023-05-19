@@ -2,6 +2,10 @@ console.log("content is loaded");
 const formal = document.createElement("span"); formal.id = "formal";
 const $title = document.createElement("p"); $title.className = "title";//$title.id = "title";
 const $dragged = document.createElement("p"); $dragged.id = "dragged";
+const $draggedContainer = document.createElement("div"); $draggedContainer.className = "container";
+
+$draggedContainer.appendChild($dragged);
+
 const $another = document.createElement("button"); $another.id = "another";
 const $apply = document.createElement("button"); $apply.id = "apply";
 
@@ -21,7 +25,7 @@ const syn = document.createElement("span"); syn.id = "syn";// tooltip.className 
 
   const $dic_more = document.createElement("p"); $dic_more.id = "dic_more";
 
-  const $rec_title = document.createElement("p"); $rec_title.className = "title";//$rec_title.id = "rec_title";
+  const $rec_title = document.createElement("p"); $rec_title.className = "title"; $rec_title.id = "rec_title";
   const $rec1 = document.createElement("p"); $rec1.id = "rec1"; $rec1.className = "words";
   const $rec2 = document.createElement("p"); $rec2.id = "rec2"; $rec2.className = "words";
   const $rec3 = document.createElement("p"); $rec3.id = "rec3"; $rec3.className = "words";
@@ -34,8 +38,7 @@ const syn = document.createElement("span"); syn.id = "syn";// tooltip.className 
   </div>`;
   $more.innerHTML = `<div id = "morebtn">  <span> 유의어/동의어 추천 </span>  <img class=morebtn style="width:16px; height:16px;">
 </div>`
-  $rec_another.innerHTML = `<div><img class=again  style="width:16px; height:16px;">  <span>다른 추천 단어 보기</span>
-</div>`
+  $rec_another.innerHTML = `<div><img class=again  style="width:16px; height:16px;"><span>다른 추천 단어 보기</span></div>`
 $rec_another.style.cursor = "pointer"
 $dic_more.innerText = "검색 결과 더 보기☞"
 
@@ -117,6 +120,22 @@ function addUnderline() {
 document.addEventListener("input", ()=>{addUnderline()})
 
 
+$correct.addEventListener("mousedown", (event) => {
+    event.stopImmediatePropagation();
+    grammar.style.display = "none";
+    const $gamsa = document.getElementsByTagName('div');
+    
+    for (let i = 0; i < $gamsa.length; i++) {
+      if ($gamsa[i].innerHTML.includes(`<span id="wrong">감사하빈다</span>`)) {
+        document.querySelector("#wrong").style.textDecoration = "none";
+        $gamsa[i].innerHTML = $gamsa[i].innerHTML.replace(`<span id="wrong">감사하빈다</span>`, "감사합니다");
+        break;
+      }
+    }
+  
+
+});
+
 //드래그-> 단어일 경우
 function getMeaning(res) {    
   word_init()
@@ -185,10 +204,15 @@ document.addEventListener("mouseup", function (event) {
 
   // 드래그 시작 위치로 툴팁 위치 지정
 document.addEventListener('mousedown', (event) => {
-  formal.style.left = event.pageX + 'px';
-  formal.style.top = event.pageY + 'px';
-  syn.style.left = event.pageX + 'px';
-  syn.style.top = event.pageY + 'px';
+  formal.style.left = event.pageX -150 + 'px';
+  formal.style.top = event.pageY -150 + 'px';
+  syn.style.left = event.pageX -150+ 'px';
+  syn.style.top = event.pageY -150+ 'px';
+  grammar.style.left = event.pageX -150+ 'px';
+  grammar.style.top = event.pageY -150+ 'px';
+  //syn.style.left = event.pageX -600+ 'px';
+  //syn.style.top = event.pageY -300+ 'px';
+
 
     console.log(event.pageX, event.pageY, event.clientX, event.clientY);
 

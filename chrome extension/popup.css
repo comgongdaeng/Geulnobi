@@ -1,8 +1,16 @@
-#logo {
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
+
+h1, div, span {
+  font-family: 'Nanum Gothic', sans-serif;
+  font-weight: 800;
+}
+
+/*#logo {
   height: 60px;
   width: 60px;
 }
-
+*/
 
 hr {
   width: 350px;
@@ -35,7 +43,7 @@ hr {
   width: 58px;
   height: 28px;
   background: #fff;
-  border: 2px solid #36ae92;
+  border: 2px solid #11714d;/*#36ae92;*/
   border-radius: 20px;
   transition: 0.2s;
 }
@@ -52,7 +60,7 @@ hr {
   width: 19px;
   height: 19px;
   border-radius: 20px;
-  background: #36ae92;
+  background: #11714d;
   transition: 0.2s;
 }
 

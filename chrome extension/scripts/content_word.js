@@ -2,10 +2,18 @@ console.log("content_word is loaded");
 
   //init 함수에 넣어서 되돌리기
   function word_init() {
-    syn.style.height = "200px";
+    syn.style.height = "170px";
   $more.style.display= "block";    $br.style.display = "block"; $dic_more.style.display = "block"; $meaningContainer.style.display = "block";
     $rec_title.style.display="none"; $rec1.style.display="none"; $rec2.style.display="none"; $rec3.style.display="none"; $rec_another.style.display="none";
-
+    $rec1.innerHTML = `<div style ="text-align:center";>
+  <img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/ZKZg.gif" style = "width:16px; height:16px;">
+    </div>`;
+    $rec2.innerHTML = `<div style ="text-align:center";>
+  <img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/ZKZg.gif" style = "width:16px; height:16px;">
+  </div>`;
+  $rec3.innerHTML = `<div style ="text-align:center";>
+  <img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/ZKZg.gif" style = "width:16px; height:16px;">
+  </div>`;
 
   }
   word_init()
@@ -14,8 +22,8 @@ console.log("content_word is loaded");
   syn.append($title_w, $target, $meaningContainer, $dic_more, $more, $br, $rec_title, $rec1, $rec2, $rec3, $rec_another);//, $another, $apply
 
 
-  $title_w.class = "non-draggable";
-  $target.class = "non-draggable";
+  $title_w.className += "non-draggable";
+  $target.className = "non-draggable";
 
 
 
@@ -48,7 +56,9 @@ $dic_more.addEventListener('mousedown', (event)=>{
     $definition.innerText = dic_result["items"][i]["definition"];
     $definition.className = "dic_meaning";
     $sup_no.innerText = dic_result["items"][i]["sup_no"];
+    $sup_no.className = "sup_no";
     $pos.innerText = dic_result["items"][i]["pos"];
+    $pos.className = "pos";
 
     $sidebar.append($word, $sup_no, $pos);
     $sidebar.append($definition);
@@ -87,9 +97,9 @@ async function getSyn(selection) {
   if(sentence){
   await fetch(url).then((response) => response.json())
       .then((data) => {synonyms= data; console.log(data)});
-  if(synonyms["rec_result"][0]) $rec1.innerHTML += synonyms["rec_result"][0];
-  if(synonyms["rec_result"][1]) $rec2.innerHTML += synonyms["rec_result"][1];
-  if(synonyms["rec_result"][2]) $rec3.innerHTML += synonyms["rec_result"][2];
+  if(synonyms["rec_result"][0]) $rec1.innerHTML = `<img class=triangle style="width:16px; height:16px";> ` + synonyms["rec_result"][0];
+  if(synonyms["rec_result"][1]) $rec2.innerHTML = `<img class=triangle style="width:16px; height:16px";> `+ synonyms["rec_result"][1];
+  if(synonyms["rec_result"][2]) $rec3.innerHTML = `<img class=triangle style="width:16px; height:16px";> `+ synonyms["rec_result"][2];
 }
 }
 
@@ -145,15 +155,11 @@ function apply_w(suggestion) {
     event.stopImmediatePropagation();
   })
   $more.addEventListener("mouseover", ()=>{
-    $more.innerHTML = `<div>
-    <span> 유의어/동의어 추천 </span>
-    <img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/more_green.png" style="width:16px; height:16px;">
+    $more.innerHTML = `<div><span> 유의어/동의어 추천 </span><img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/more_green.png" style="width:16px; height:16px;">
   </div>`
   })
   $more.addEventListener("mouseleave", ()=>{
-    $more.innerHTML = `<div>
-    <span> 유의어/동의어 추천 </span>
-    <img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/more.png" style="width:16px; height:16px;">
+    $more.innerHTML = `<div><span> 유의어/동의어 추천 </span><img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/more.png" style="width:16px; height:16px;">
   </div>`
   })
 
@@ -164,9 +170,9 @@ function apply_w(suggestion) {
     syn.style.height = "295px";
     $more.style.display= "none";
     $br.style.display = "none";
-    $rec1.innerHTML = `<img class=triangle style="width:16px; height:16px";>`;
-    $rec2.innerHTML = `<img class=triangle style="width:16px; height:16px";>`;
-    $rec3.innerHTML = `<img class=triangle style="width:16px; height:16px";>`;
+    //$rec1.innerHTML = `<img class=triangle style="width:16px; height:16px";>`;
+    //$rec2.innerHTML = `<img class=triangle style="width:16px; height:16px";>`;
+    //$rec3.innerHTML = `<img class=triangle style="width:16px; height:16px";>`;
     $rec_title.style.display="block"; $rec1.style.display="block"; $rec2.style.display="block"; $rec3.style.display="block"; $rec_another.style.display="block";
     //syn.append();
     
