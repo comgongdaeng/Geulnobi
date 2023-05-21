@@ -2,7 +2,7 @@ console.log("content is loaded");
 const formal = document.createElement("span"); formal.id = "formal";
 const $title = document.createElement("p"); $title.className = "title";//$title.id = "title";
 const $dragged = document.createElement("p"); $dragged.id = "dragged";
-const $draggedContainer = document.createElement("div"); $draggedContainer.className = "container";
+const $draggedContainer = document.createElement("div"); $draggedContainer.className = "container"; $draggedContainer.id = "draggedContainer";
 
 $draggedContainer.appendChild($dragged);
 
@@ -16,31 +16,30 @@ const syn = document.createElement("span"); syn.id = "syn";// tooltip.className 
 
 
   const $meaning = document.createElement("p"); $meaning.id = "meaning";
-  const $meaningContainer = document.createElement("div"); $meaningContainer.className = "container";
+  const $meaningContainer = document.createElement("div"); $meaningContainer.className = "container"; $meaningContainer.id ="meaningContainer";
   $meaningContainer.style.overflow = "auto";
   $meaningContainer.style.maxHeight = "60px"; 
   $meaningContainer.appendChild($meaning);
 
   const $more = document.createElement("button"); $more.id = "more";
-
   const $dic_more = document.createElement("p"); $dic_more.id = "dic_more";
 
-  const $rec_title = document.createElement("p"); $rec_title.className = "title"; $rec_title.id = "rec_title";
+  const $rec_title = document.createElement("p"); /*$rec_title.className = "title"; */$rec_title.id = "rec_title";
   const $rec1 = document.createElement("p"); $rec1.id = "rec1"; $rec1.className = "words";
   const $rec2 = document.createElement("p"); $rec2.id = "rec2"; $rec2.className = "words";
   const $rec3 = document.createElement("p"); $rec3.id = "rec3"; $rec3.className = "words";
-  const $rec_another = document.createElement("p"); $rec_another.id = "rec_another";
-  $rec_title.innerHTML = "<strong> 유의어/동의어 추천 </strong>"
+  const $rec_another = document.createElement("button"); $rec_another.id = "rec_another";
+  $rec_title.innerHTML = "<strong> 유의어/동의어 추천 </strong>";
   const $br = document.createElement("br");
   $title_w.innerHTML = "<strong> 단어 뜻 </strong>";
-  $meaning.innerHTML = `<div style ="text-align:center";>
-  <img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/ZKZg.gif" style = "width:16px; height:16px;">
+  $meaning.innerHTML = `<div style ="text-align:center";>;
+  <img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/ZKZg.gif" style = "width:16px; height:16px;">;
   </div>`;
   $more.innerHTML = `<div id = "morebtn">  <span> 유의어/동의어 추천 </span>  <img class=morebtn style="width:16px; height:16px;">
-</div>`
-  $rec_another.innerHTML = `<div><img class=again  style="width:16px; height:16px;"><span>다른 추천 단어 보기</span></div>`
-$rec_another.style.cursor = "pointer"
-$dic_more.innerText = "검색 결과 더 보기☞"
+</div>`;
+  $rec_another.innerHTML = `<div><img class=again  style="width:16px; height:16px;"><span>다른 추천 단어 보기</span></div>`;
+$rec_another.style.cursor = "pointer";
+$dic_more.innerText = "검색 결과 더 보기☞";
 
 const grammar = document.createElement("span"); grammar.id = "grammar";
 const $correct = document.createElement("p"); $correct.id = "correct";

@@ -22,7 +22,7 @@ console.log("content_word is loaded");
   syn.append($title_w, $target, $meaningContainer, $dic_more, $more, $br, $rec_title, $rec1, $rec2, $rec3, $rec_another);//, $another, $apply
 
 
-  $title_w.className += "non-draggable";
+  $title_w.className += " non-draggable"; //클래스 이름이 붙는 에러 발생하여 공백 추가하였음
   $target.className = "non-draggable";
 
 
@@ -64,7 +64,7 @@ $dic_more.addEventListener('mousedown', (event)=>{
     $sidebar.append($definition);
     $sidebar.append(document.createElement('hr'));
   }
-})
+});
 
 $x_btn.addEventListener('click', (event)=> {
   $sidebar.style.display = "none";
@@ -73,7 +73,7 @@ $x_btn.addEventListener('click', (event)=> {
   while ($sidebar.firstChild) {
         $sidebar.removeChild($sidebar.firstChild);
     }
-})
+});
 
 let synonyms;
 async function getSyn(selection) {
@@ -97,21 +97,22 @@ async function getSyn(selection) {
   if(sentence){
   await fetch(url).then((response) => response.json())
       .then((data) => {synonyms= data; console.log(data)});
-  if(synonyms["rec_result"][0]) $rec1.innerHTML = `<img class=triangle style="width:16px; height:16px";> ` + synonyms["rec_result"][0];
-  if(synonyms["rec_result"][1]) $rec2.innerHTML = `<img class=triangle style="width:16px; height:16px";> `+ synonyms["rec_result"][1];
-  if(synonyms["rec_result"][2]) $rec3.innerHTML = `<img class=triangle style="width:16px; height:16px";> `+ synonyms["rec_result"][2];
-}
+  if(synonyms["rec_result"][0]) $rec1.innerHTML = `<img class=triangle style="width:16px; height:15px";> ` + synonyms["rec_result"][0];
+  if(synonyms["rec_result"][1]) $rec2.innerHTML = `<img class=triangle style="width:16px; height:15px";> `+ synonyms["rec_result"][1];
+  if(synonyms["rec_result"][2]) $rec3.innerHTML = `<img class=triangle style="width:16px; height:15px";> `+ synonyms["rec_result"][2];
+  } 
 }
 
-$rec_another.addEventListener("mouseover", ()=>{
-  $rec_another.style.backgroundColor = "#11714d"
-  $rec_another.style.color = "white"
-})
 
-$rec_another.addEventListener("mouseleave", ()=>{
-  $rec_another.style.backgroundColor = "white"
-  $rec_another.style.color = "black"
-})
+// $rec_another.addEventListener("mouseover", ()=>{
+//   $rec_another.style.backgroundColor = "#11714d"
+//   $rec_another.style.color = "white"
+// });
+
+// $rec_another.addEventListener("mouseleave", ()=>{
+//   $rec_another.style.backgroundColor = "white"
+//   $rec_another.style.color = "black"
+// });
 
 $rec_another.addEventListener("mousedown", (event)=>{
   if($rec1.innerHTML.includes(synonyms["result1"][0])) {
@@ -129,7 +130,7 @@ $rec_another.addEventListener("mousedown", (event)=>{
   $rec2.innerHTML += synonyms["result1"][1];
   $rec3.innerHTML += synonyms["result1"][2];
   }
-})
+});
 
 function apply_w(suggestion) {
   syn.style.display = "none";
@@ -143,31 +144,22 @@ function apply_w(suggestion) {
   $rec1.addEventListener("mousedown", (event)=>{
     apply_w($rec1.innerText);
     event.stopImmediatePropagation();
-  })
+  });
 
   $rec2.addEventListener("mousedown", (event)=>{
     apply_w($rec2.innerText);
     event.stopImmediatePropagation();
-  })
+  });
 
   $rec3.addEventListener("mousedown", (event)=>{
     apply_w($rec3.innerText);
     event.stopImmediatePropagation();
-  })
-  $more.addEventListener("mouseover", ()=>{
-    $more.innerHTML = `<div><span> 유의어/동의어 추천 </span><img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/more_green.png" style="width:16px; height:16px;">
-  </div>`
-  })
-  $more.addEventListener("mouseleave", ()=>{
-    $more.innerHTML = `<div><span> 유의어/동의어 추천 </span><img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/more.png" style="width:16px; height:16px;">
-  </div>`
-  })
+  });
 
-  
   $more.addEventListener("mousedown", (event)=>{
     //ROBERTA URL
     
-    syn.style.height = "295px";
+    syn.style.height = "auto";
     $more.style.display= "none";
     $br.style.display = "none";
     //$rec1.innerHTML = `<img class=triangle style="width:16px; height:16px";>`;
@@ -178,6 +170,21 @@ function apply_w(suggestion) {
     
     
 
-    event.stopImmediatePropagation();
+    //event.stopImmediatePropagation();
+    event.stopPropagation();
 
   });
+
+
+ /* more 버튼 padding 클릭 시에만 작동하던 이유가 아래 이벤트와 겹쳐서 그런 것 같아 주석처리하였습니다.
+
+  $more.addEventListener("mouseover", ()=>{
+    $more.innerHTML = `<div><span> 유의어/동의어 추천 </span><img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/more_green.png" style="width:16px; height:16px;">
+  </div>`
+  });
+  $more.addEventListener("mouseleave", ()=>{
+    $more.innerHTML = `<div><span> 유의어/동의어 추천 </span><img src = "https://cc2022-2071024.s3.ap-northeast-1.amazonaws.com/more.png" style="width:16px; height:16px;">
+  </div>`
+  });
+*/
+
