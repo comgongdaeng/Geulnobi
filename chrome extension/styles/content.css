@@ -9,7 +9,7 @@ span.error {
 	display: none;
 	position: absolute;
 	height: auto;
-	width: calc(40%);
+	width: calc(30%);
 	background-color: white;
 	border: solid 1px #a6b9b2;
 	border-radius: 15px;

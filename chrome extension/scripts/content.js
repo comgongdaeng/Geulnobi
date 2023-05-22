@@ -154,6 +154,7 @@ function getMeaning(res) {
 }
 
 
+
   //마우스다운 이벤트-> 드래그되었는지 아닌지 확인
 document.addEventListener("mouseup", function (event) {
     let clickedElement = event.target;
@@ -184,25 +185,55 @@ document.addEventListener("mouseup", function (event) {
               if (selec_text.trim().length !== 0) {
                 isDragging = true;
                 formal.style.display = 'block';
+                formal.style.visibility="visible";
+                syn.style.visibility ="hidden";
+                syn.style.display="none";
                 parentElement.append(formal);
+                if (document.getElementById('syn') != null){
+                  document.getElementById('syn').remove();
+                  //this.removeChild
+                } 
+                
+                
               }
             } else {
               let tr = getMeaning(result);
               syn.style.display = "block";
+              syn.style.visibility = "visible";
+              formal.style.visibility="hidden";
+              formal.style.display = 'none';
               parentElement.append(syn);
+              if (document.getElementById('formal') != null){
+                console.log(document.getElementById('formal'));
+                document.getElementById('formal').remove();
+              }
+              
               getSyn(selection);
             }
           });
 
     } else {
-        syn.style.display = 'none';
-        formal.style.display = "none";//드래그된 내용이 없으면 툴팁 안 보이게
+        // syn.style.display = 'none';
+        // formal.style.display = "none";//드래그된 내용이 없으면 툴팁 안 보이게
+        // formal.style.visibility = "hidden";
+        // syn.style.visibility = "hidden";
+        if (document.getElementById('syn') != null){
+          document.getElementById('syn').remove();
+          //this.removeChild
+        } 
+        if (document.getElementById('formal') != null){
+          console.log(document.getElementById('formal'));
+          document.getElementById('formal').remove();
+        }
+        
+        
         isDragging = false;}
   });
 
 
   // 드래그 시작 위치로 툴팁 위치 지정
 document.addEventListener('mousedown', (event) => {
+
   formal.style.left = event.pageX -150 + 'px';
   formal.style.top = event.pageY -150 + 'px';
   syn.style.left = event.pageX -150+ 'px';
